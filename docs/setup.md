@@ -1,39 +1,36 @@
-# Local setup
+# Local setup and reproducibility prerequisites
 
-## Locations
+## Software
 
-Historical R scripts expect:
+R 4.x and packages used across analytical stages include `DBI`, `duckdb`, `data.table`, `survival`, `splines`, `ggplot2`, `scales`, `flextable` and `officer`; some optional analyses use `speedglm`. Python 3 is used by the configuration and repository-check utilities.
 
-- R scripts: `C:/Users/garin/OneDrive/OHSU/Research/NRSG/TriNetX/bph_m/R`
-- Source export: `C:/Users/garin/OneDrive/OHSU/Research/NRSG/TriNetX/Data/BPH`
-- Working area: `C:/TriNetX/bph_m_work`
-- DuckDB: `C:/TriNetX/bph_m_work/duckdb/bph_m.duckdb`
+An exact package lockfile was not recovered. Record the local R session and package versions before attempting a reproducibility run.
 
-These paths occur in the **original historical scripts**. Do not globally search-and-replace them in the preserved archive without tracking the change and validating downstream inputs. Stage 21 supports `BPH_WORK_DIR` as an environment override.
+## Data and working directories
 
-## Packages
+The R source was retained from the original Windows analysis environment. Several scripts contain absolute paths to the original code directory, restricted TriNetX export, and DuckDB database. These paths are historical configuration values, not publicly available resources.
 
-R (the original local environment used R 4.x), with `DBI`, `duckdb`, `data.table`, `survival`, `splines` (base recommended), `ggplot2`, `scales`, `flextable`, `officer` and optional `speedglm`. Install only from your standard approved R package mirror. This repository does not invent an `renv.lock` file: package versions from the exact analysis execution environment have not been recovered. Capture `sessionInfo()` before any reproducibility rerun.
-
-## Reproduction prerequisites
-
-Stage 00 requires the licensed, locally exported TriNetX files. Stages 01–16 materialize tables in the same DuckDB database. Stages 15–21 assume prerequisite cohort tables and final analytical outputs already exist.
-
-For current manuscript reporting, use the validated existing DuckDB. Run only read-only stages until authorized to reconstruct the entire cohort. Back up the `.duckdb` file and outputs if any model or source stage must be rerun.
-
-## Data boundaries
-
-Do not place study extracts or the working DuckDB inside the repository. Do not publish generated CSVs before reviewing institutional minimum-cell disclosure requirements. If a generated file contains IDs or dates of care, treat it as restricted even when deidentified at source.
-
-## Configure paths without modifying the source archive
-
-The historical scripts record the Windows locations used for their original execution. For a different authorized workstation, create a separate configured copy of the R scripts:
+To prepare a separate copy with workstation-specific paths, run from the repository root:
 
 ```bash
-python scripts/configure_local_paths.py \
-  --raw-dir /path/to/authorized/trinetx-csvs \
-  --work-dir /path/to/analysis-work \
-  --out-dir /path/to/local-r-scripts
+python scripts/configure_local_paths.py --raw-dir /path/to/authorized/trinetx-export --work-dir /path/to/separate-analysis-work --out-dir /path/to/configured-r-scripts
 ```
 
-This is a literal path substitution, not a reconstruction or scientific change. Review `CONFIGURATION_NOTES.txt` before running. The raw data schema, appropriate package versions and the full input history remain necessary for independent reproduction; the original `R/` code is not altered.
+The configuration tool performs literal path substitution without modifying versioned source files. Review the generated `CONFIGURATION_NOTES.txt`. Confirm local data schemas and dependencies before executing any stage.
+
+## Execution precautions
+
+- Stages 00–17 include table-creation, cohort-construction or modeling operations and may overwrite an existing database or outputs.
+- Historical stages are retained for provenance. Final estimates depend on revisions, including the Stage 16 boundary correction and Stage 17 reporting.
+- Stages 18–27 support aggregate reporting, diagnostics and reconciliation. Each script documents dependencies.
+- Do not rerun historical scripts against an existing validated database without a separate backup and output directory.
+
+See the [stage guide](analysis-pipeline.md). A passing repository hygiene test is not a successful reproduction of the research.
+
+## Repository check
+
+```bash
+python tests/check_repository.py
+```
+
+The check looks for expected scripts and common restricted-data file types. It does not validate statistical models or inspect every possible disclosure risk.
