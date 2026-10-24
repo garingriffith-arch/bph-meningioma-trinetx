@@ -1,0 +1,115 @@
+# TriNetX source data and any person-level derivatives
+Data/
+data/
+raw/
+restricted/
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+*.sqlite3
+patient*.csv
+medication.csv
+diagnosis.csv
+encounter.csv
+procedure.csv
+lab_result.csv
+vital.csv
+
+# Locally generated analysis files: retain outside Git until disclosure review
+analysis/
+analysis_*/
+qc/
+qc_*/
+manuscript_ready/
+manuscript_ready_final/
+reporting_RECORD_PE_TARGET/
+reporting_TARGET_day0/
+reporting_*/
+final_documents/
+resident_review_documents/
+pre_resident_QC/
+resident_audit_upload/
+BPH_final_resident_audit_upload.zip
+*.rds
+*.RData
+.Rhistory
+.Rproj.user/
+.Renviron
+.Rprofile
+.env
+.env.*
+*.log
+*.tmp
+~$*
+*.bak
+
+# Credentials and common private exports
+*.key
+*.pem
+*.p12
+*credentials*.json
+*token*.txt
+
+# OS and archives
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# Deny-by-default generated tabular and binary exports
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.arrow
+*.feather
+*.dta
+*.sav
+*.zip
+*.7z
+*.pdf
+*.docx
+!source-provenance/*.csv
+# Data files
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.rds
+*.RData
+*.rda
+*.sas7bdat
+*.dta
+*.db
+*.sqlite
+
+# Archives
+*.zip
+*.7z
+*.rar
+
+# Credentials
+.env
+.env.*
+*.pem
+*.key
+*credentials*
+*secrets*
+
+# R and Python temporary files
+.Rhistory
+.Rproj.user/
+__pycache__/
+*.pyc
+.venv/
+
+# Generated outputs
+outputs/
+results/
+logs/
+figures/
+tables/
