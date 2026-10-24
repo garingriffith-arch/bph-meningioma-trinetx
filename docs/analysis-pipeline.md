@@ -27,7 +27,6 @@
 | 20 | `20_RECORD_PE_TARGET_reporting_QC.R` | RECORD-PE/TARGET descriptive summaries | Table S8, missingness, crosswalk |
 | 21 | `21_target_dayzero_reporting.R` | Stage 14 day-zero cumulative flow and baseline by arm | TARGET flow/baseline and reconciliation |
 | 22 | `22_audit_reporting_gaps.R` | Read-only inventory of location codes and available PH diagnostics | Aggregate coding QC and diagnostic file listing |
-
 | 23 | `23_collect_model_diagnostics.R` | Gather archived proportional-hazards and censoring-weight diagnostic exports | Aggregate-only diagnostic archive |
 | 24 | `24_verify_boundary_fixed_PH.R` | Exact-cohort PH diagnostics for existing Stage 16 models | Model-specific treatment PH tests, no database writes |
 | 25 | `25_reconcile_rare_endpoints.R` | Reproduce four archived Stage 10 rare endpoints, then fit boundary-aligned denominators | New Table S11 candidate, replay QC, read-only |
@@ -38,16 +37,16 @@ Stages 00–04 are maintained for historical provenance. The published-in-draft 
 
 ## Execution policy
 
-**Default action: inspect, do not execute.** Stages 00–17 can be destructive to the working analysis database because they contain `CREATE OR REPLACE TABLE` and/or fit models; Stage 17 also refits three previously defined sensitivity specifications on the corrected risk set. The script `scripts/print_run_plan.R` displays the source order but never executes other scripts.
+**Inspect dependencies before execution.** Stages 00–17 can be destructive to the working analysis database because they contain `CREATE OR REPLACE TABLE` and/or fit models; Stage 17 also refits three previously defined sensitivity specifications on the corrected risk set. The script `scripts/print_run_plan.R` displays the source order but never executes other scripts.
 
-For approved full reconstruction: preserve a timestamped copy of the original database and outputs, run stages serially in the source-expected working directory, archive `sessionInfo()`, and compare generated output hashes and model summaries with the Stage 19/20 reference snapshots before replacing any manuscript numbers.
+For independent reconstruction, use a separate authorized copy of the data and a fresh working directory, record `sessionInfo()`, execute the scientifically relevant dependencies in stage order, and reconcile generated outputs against independently retained analysis summaries before drawing conclusions.
 
-For reporting-only completion: run Stage 21 against the existing DuckDB and send the resulting **aggregate-only** files for verification. Stages 18–20 have already been run and reconciled previously; there is no need to refit them merely to document methods.
+For reporting-only workflows, Stage 21 generates aggregate day-zero flow and baseline summaries from an existing validated DuckDB without refitting outcome models. The reporting scripts should be run only when their source tables and dependencies have been checked.
 
 ## Known limits
 
 - Day-zero vs primary landmark cohorts address different target populations and times at risk.
 - Time-varying adherence, dispensing, and exposure continuity are not identified from repeated medication records alone.
 - Historical R package versions are not captured by an original lockfile; full computational reproducibility requires an environment snapshot.
-- The Stage 17 code is a patched reporting script and must be compared to the current local script before replacement.
+- Stage 13 is superseded by Stage 17 for final tabulation; original historical stages remain available for review.
 - No written study protocol was used; do not claim prospective prespecification of exploratory analyses.
