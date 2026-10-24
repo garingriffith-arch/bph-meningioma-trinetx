@@ -1,6 +1,6 @@
-# Supplementary Methods: source-code-verified definitions
+# Study methods and variable definitions
 
-Status: scientific draft for author verification. Definitions below were recovered from the original September study scripts and were checked against later Stage 14–17 boundary corrections. Numerical results remain those previously reconciled in Stage 19/20.
+The definitions below are derived from the versioned R analysis scripts. Historical cohort definitions and subsequent boundary corrections are distinguished where relevant. These notes document the code, not independent validation of the underlying TriNetX extract.
 
 ## Medication exposure and comparator selection
 
@@ -60,20 +60,8 @@ These are algorithm definitions, not externally adjudicated phenotype validation
 
 ## Ethics and data access
 
-The study underwent an institutional Research Feasibility Determination and was determined **not to constitute human subjects research**; institutional review board review was therefore not required. RFD STUDY00030063 was determined April 7, 2026. Raw data and underlying EHR extracts remain subject to TriNetX/institutional access terms. The GitHub repository must remain private pending authorization for code release.
+The study underwent an institutional Research Feasibility Determination and was determined **not to constitute human subjects research**; institutional review board review was therefore not required. RFD STUDY00030063 was determined April 7, 2026. Raw data and underlying EHR extracts remain subject to TriNetX/institutional access terms. The source EHR data are not distributed in this public code repository. Any use and distribution of code and aggregate outputs remain subject to applicable institutional and contractual requirements.
 
-## Remaining sign-off before manuscript submission
+## Additional source limitations
 
-1. Independently verify the source `medication.csv` record semantics (order, history, administration, or dispensing) from its TriNetX extract dictionary; code alone does not settle provenance.
-2. Confirm **re-entry**, episode construction and prior-exposure wording from complete Stage 02/05 cohort logs and export documentation.
-3. Review the PH diagnostics file and clarify any departures from proportional hazards; no blanket claim of satisfied assumptions.
-4. Explain the Ex-US outside-US healthcare-organization category and its occurrence in the Dataworks-USA-labeled extract.
-5. Refit or clearly annotate the rare-endpoint table whose historical denominator is 501,446 rather than the 501,445 boundary-fixed cohort.
-6. Run Stage 21 and verify its day-zero eligibility flow and baseline table.
-7. No written study protocol was used; do not claim prospective prespecification of exploratory analyses.
-8. Confirm final sharing/registration/ethics statements against institutional documents.
-
-
-## Confirmed source and regulatory details (October 2026)
-
-RFD STUDY00030063 (April 7, 2026) determined non-human-subjects research; no IRB oversight. No written protocol was prepared. No funding, conflicts, or additional disclosures were reported. The source Ex-US category denotes outside-US healthcare organizations. TriNetX EHR medication records may reflect prescriptions written or administrations depending on context; dispensing and adherence are not verified. Final submission checklist page numbers remain dependent on target-journal layout.
+The source `Ex-US` category denotes healthcare organizations outside the United States and must not be interpreted as individual patient residence. Medication events can represent prescriptions or administrations depending on their original source; dispensing and adherence are not confirmed. The research had no written prospective protocol, and exploratory analyses should not be labeled prospectively prespecified.

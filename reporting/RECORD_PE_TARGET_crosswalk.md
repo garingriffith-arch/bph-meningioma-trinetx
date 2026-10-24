@@ -1,29 +1,24 @@
-# RECORD-PE / TARGET reporting crosswalk
+# Reporting-guideline mapping
 
-**Scope**: RECORD-PE applies to the active-comparator observational study, including RECORD and STROBE foundations. TARGET applies to the *day-zero target-trial-aligned sensitivity analyses* only. The checklist must not classify the full one-year-landmark analysis as a completed target-trial emulation.
+The principal observational cohort is described with reference to RECORD-PE, together with its RECORD/STROBE foundations. TARGET applies to the separate day-zero initiation-strategy sensitivity analyses; it does not describe the complete one-year-landmark study as a target-trial emulation.
 
-| Reporting requirement | Current evidence and manuscript location | Status/action |
-| --- | --- | --- |
-| RECORD-PE: treatment vocabulary/classification | Stage 01 RxNorm dictionary; Supplementary Methods | **Source verified**; validate extract semantics |
-| RECORD-PE: study design and time windows | Stages 02, 05, 07, 14; Figure S1 design schematic | **Source verified**; confirm displayed figure uses exact dates |
-| RECORD-PE: treatment switching and sustained exposure | Stage 07 medication-date counts; Stages 11–12 | **Source verified**; label as recorded persistence, not filled adherence |
-| RECORD-PE: BPH/comparator/new-user rule | Stages 01–02; original cohort flow | **Partly verified**; prior-use interpretation remains limited by captured history |
-| RECORD-PE: proportional hazards, overlap and IPCW | Stages 06, 15; diagnostics CSVs | **Partly verified**; insert model-specific PH values |
-| RECORD-PE: outcome algorithms and controls | Stage 14 codes; Table S4/S5 | **Source verified**; avoid claiming chart-adjudicated validation |
-| STROBE/RECORD: participants, exclusions | Figure 1 and primary Stage 02/05 flow | **Present**; verify revised and final boundary denominator reconciliation |
-| STROBE/RECORD: follow-up, missingness, incidence | Stage 20 Table S8, missingness report | **Present in internal draft**; author/data disclosure review |
-| RECORD: reproducibility and data availability | Versioned R scripts, repository, sharing statement | **Conditional**; private until terms permit release |
-| TARGET: hypothetical trial, strategy, contrast | Stage 14 trial-specification table (Table S1) | **Partial**; complete time-zero and assumptions descriptions |
-| TARGET: observational implementation | Stage 14/15 code | **Present**; distinguish day-zero vs one-year lag |
-| TARGET: day-zero cohort flow | Stage 21 `TARGET_day0_cumulative_flow.csv` | **Pending local run** |
-| TARGET: day-zero baseline by arm | Stage 21 `TARGET_day0_baseline_by_arm.csv` | **Pending local run** |
-| TARGET: day-zero follow-up and missingness | Stage 20 day-zero aggregates | **Present**; reconcile with Stage 21 |
-| TARGET: outcomes and effect estimates | Stage 15 and Stage 17 Table 2 | **Present**; interpret as observational estimates |
-| TARGET: registration/protocol and ethics | Declarations; RFD non-human-subjects determination | **Documented**; RFD STUDY00030063 (April 7, 2026), no written protocol; page mapping pending |
+This table points to the corresponding analysis source files. It is not a completed reporting checklist and does not substitute for manuscript page references.
 
-Do not mark a checklist item "complete" merely because an R script exists. The final journal checklists must map each item to actual page numbers **after** the manuscript is paginated. Keep source definitions and unresolved items distinguishable.
+| Reporting topic | Relevant source |
+| --- | --- |
+| Medication vocabulary and treatment classification | `R/01_extract_medication_timeline.R` |
+| Primary cohort eligibility and landmark | `R/02_build_primary_cohort_v3.R`, `R/03_refresh_meningioma_outcomes.R`, `R/05_rebuild_without_future_followup_requirement.R` |
+| Revised primary models and overlap weights | `R/06_revised_primary_analysis.R`, `R/final_analysis_helpers.R` |
+| Recorded treatment persistence | `R/07_build_core_final_sensitivities.R`, `R/11_build_signal_interrogation_cohorts.R` |
+| Exploratory drug-specific and persistence analyses | `R/10_run_final_sensitivity_models.R`, `R/12_run_signal_interrogation_models.R` |
+| Day-zero treatment assignment and sensitivity cohorts | `R/14_build_methodologic_validity_cohorts.R` |
+| Day-zero and censoring-weighted models | `R/15_run_methodologic_validity_models.R` |
+| Landmark-boundary and outcome checks | `R/16_high_specificity_persistence_and_boundary_fix.R` |
+| Final tabulation and plots | `R/17_make_final_manuscript_outputs.R` |
+| Reporting summaries and missingness | `R/20_RECORD_PE_TARGET_reporting_QC.R` |
+| Day-zero participant flow and baseline summaries | `R/21_target_dayzero_reporting.R` |
+| Proportional-hazards and rare-outcome reconciliation | `R/24_verify_boundary_fixed_PH.R`, `R/25_reconcile_rare_endpoints.R` |
+| Numerical reconciliation and disclosure flags | `R/26_finalize_analysis_audit.R` |
+| Study declarations and controlled-access data | `reporting/study-declarations.md`, `docs/data-governance.md` |
 
-
-## Confirmed source and regulatory details (October 2026)
-
-RFD STUDY00030063 (April 7, 2026) determined non-human-subjects research; no IRB oversight. No written protocol was prepared. No funding, conflicts, or additional disclosures were reported. The source Ex-US category denotes outside-US healthcare organizations. TriNetX EHR medication records may reflect prescriptions written or administrations depending on context; dispensing and adherence are not verified. Final submission checklist page numbers remain dependent on target-journal layout.
+The final manuscript and supplement, rather than this mapping, establish which analyses and results were actually reported. Source-code presence alone does not establish reporting-guideline compliance.
