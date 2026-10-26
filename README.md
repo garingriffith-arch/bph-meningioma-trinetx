@@ -38,6 +38,14 @@ Run the offline file-hygiene check:
 python tests/check_repository.py
 ```
 
+## Reproducibility audit and optional source-geography check
+
+The [reproducibility audit](docs/reproducibility-audit.md) documents which parts of the pipeline are source-verifiable and which depend on controlled-access records or missing historical package versions.
+
+On an authorized workstation, run `scripts/record_environment.R` to record the **currently installed** R and package versions in a local report. This is not a reconstruction of the original analysis environment.
+
+An optional, **post hoc** source-geography sensitivity is available in `scripts/check_geography_sensitivity.R`. It reproduces the locked primary model before re-estimating that model after excluding HCOs coded `Ex-US`. It uses DuckDB read-only and does not change the primary study cohort. Any resulting estimate is a sensitivity check, not a replacement primary result.
+
 ## Reporting and data access
 
 The observational study is described with reference to RECORD-PE; separate day-zero sensitivity analyses are described with reference to TARGET. The latter should not be mistaken for a randomized trial or a complete emulation of the primary landmark analysis.
